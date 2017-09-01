@@ -5,6 +5,7 @@ For a complete walkthrough of creating this type of bot see the article at
 https://aka.ms/abs-node-luis
 -----------------------------------------------------------------------------*/
 "use strict";
+require('dotenv').config();
 var builder = require("botbuilder");
 var botbuilder_azure = require("botbuilder-azure");
 var path = require('path');
@@ -31,9 +32,10 @@ const LuisModelUrl = 'https://' + luisAPIHostName + '/luis/v1/application?id=' +
 // Main dialog with LUIS
 var recognizer = new builder.LuisRecognizer(LuisModelUrl);
 var intents = new builder.IntentDialog({ recognizers: [recognizer] })
-/*
-.matches('<yourIntent>')... See details at http://docs.botframework.com/builder/node/guides/understanding-natural-language/
-*/
+
+.matches('AgendarConsulta', (session,args) => {
+    session.send(JSON.stringify(args));
+})
 .onDefault((session) => {
     session.send('Sorry, I did not understand \'%s\'.', session.message.text);
 });
