@@ -35,6 +35,10 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 .matches('AgendarConsulta', (session,args) => {
     session.send(JSON.stringify(args));
 })
+.matches('Saudar', (session,args) => {
+    session.send('Oi tudo bem? Você quer agendar a consulta para quando?');
+    session.send(JSON.stringify(args));
+})
 .onDefault((session) => {
     session.send('Sorry, I did not understand \'%s\'.', session.message.text);
 });
