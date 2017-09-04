@@ -42,13 +42,14 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 })
 .matches('Saudar', (session,args) => {
     session.send('Oi tudo bem? você quer agendar a consulta para quando?');
-    session.send(JSON.stringify(args));
 })
 .onDefault((session) => {
     session.send('Sorry, I did not understand \'%s\'.', session.message.text);
 });
 
 function sessionUpdate(session, args) {  
+  var intent  = args.intent;
+  var entities = args.entities;
   var weekday = builder.EntityRecognizer.findEntity(entities, 'DiaDaSemana');            
   if (weekday)     
     session.conversationData.weekday = weekday;
