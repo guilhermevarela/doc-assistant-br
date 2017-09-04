@@ -33,16 +33,27 @@ const LuisModelUrl = 'https://' + luisAPIHostName + '/luis/v1/application?id=' +
 var recognizer = new builder.LuisRecognizer(LuisModelUrl);
 var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 .matches('AgendarConsulta', (session,args) => {
-    session.send(JSON.stringify(args));
+    sessionUpdate(session, args);
+    if (session.conversationData.weekday) {
+        session.send('Okay, podemos deixar agendado as: %s', session.conversationData.weekday);
+    } else {
+        session.send('Desculpe eu não consegui registrar o dia, poderia repetir?');
+    }
 })
 .matches('Saudar', (session,args) => {
-    session.send('Oi tudo bem? Você quer agendar a consulta para quando?');
+    session.send('Oi tudo bem? você quer agendar a consulta para quando?');
     session.send(JSON.stringify(args));
 })
 .onDefault((session) => {
     session.send('Sorry, I did not understand \'%s\'.', session.message.text);
 });
 
+function sessionUpdate(session, args) {  
+  var weekday = builder.EntityRecognizer.findEntity(entities, 'DiaDaSemana');            
+  if (weekday)     
+    session.conversationData.weekday = weekday;
+
+}
 bot.dialog('/', intents);    
 
 if (useEmulator) {
