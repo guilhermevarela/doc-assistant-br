@@ -36,7 +36,7 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
     sessionUpdate(session, args);
     if (session.conversationData.weekday) {
         session.send('Okay, podemos deixar agendado as: %s', session.conversationData.weekday);
-        session.send(JSON.stringify(session.conversationData.weekday));
+        // session.send(JSON.stringify(session.conversationData.weekday));
 
     } else {
         session.send('Desculpe eu não consegui registrar o dia, poderia repetir?');
@@ -54,7 +54,7 @@ function sessionUpdate(session, args) {
   var entities = args.entities;
   var weekday = builder.EntityRecognizer.findEntity(entities, 'DiaDaSemana');            
   if (weekday)     
-    session.conversationData.weekday = weekday;
+    session.conversationData.weekday = weekday['entity'];
 
 }
 bot.dialog('/', intents);    
