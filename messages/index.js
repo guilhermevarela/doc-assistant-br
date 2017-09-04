@@ -35,7 +35,7 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 .matches('AgendarConsulta', (session,args) => {
     sessionUpdate(session, args);
     if (session.conversationData.weekday) {
-        session.send('Okay, podemos deixar agendado as: %s', session.conversationData.weekday);
+        session.send('Okay, podemos deixar agendado na %s', session.conversationData.weekday);
         // session.send(JSON.stringify(session.conversationData.weekday));
 
     } else {
