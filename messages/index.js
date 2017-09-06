@@ -36,7 +36,7 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
     sessionUpdate(session, args);
     if (session.conversationData.weekday) {
         session.send('Okay, podemos deixar agendado na %s', session.conversationData.weekday);
-        // session.send(JSON.stringify(session.conversationData.weekday));
+        session.send(JSON.stringify(session.conversationData.weekday));
 
     } else {
         session.send('Desculpe eu não consegui registrar o dia, poderia repetir?');
